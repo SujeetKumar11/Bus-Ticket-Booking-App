@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+*.egg-info/
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+npm-debug.log
+
+# IDE
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Archives (use package.sh to create shareable zip)
+*.zip
