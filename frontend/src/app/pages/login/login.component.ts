@@ -15,12 +15,12 @@ import { BrandLogoComponent } from '../../shared/brand-logo.component';
       <app-brand-logo [light]="true"></app-brand-logo>
       <h2>Welcome Back</h2>
 
-      <div class="login-switch">
-        <button type="button" [class.on]="mode === 'user'" (click)="setMode('user')">Passenger</button>
-        <button type="button" [class.on]="mode === 'staff'" (click)="setMode('staff')">Staff</button>
-      </div>
-
       <form (ngSubmit)="submit()">
+        <label>Login as</label>
+        <div class="type-seg">
+          <button type="button" [class.on]="mode === 'user'" (click)="setMode('user')">Passenger</button>
+          <button type="button" [class.on]="mode === 'staff'" (click)="setMode('staff')">Staff</button>
+        </div>
         <label>Email or Username</label>
         <input [(ngModel)]="email" name="email" required autocomplete="username">
         <label>Password</label>
