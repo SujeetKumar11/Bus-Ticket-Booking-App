@@ -7,8 +7,21 @@ import pymysql
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+_frontend = os.getenv('FRONTEND_URL', 'http://localhost:4200')
+CORS(app, supports_credentials=True, origins=[_frontend, 'http://localhost:4200'])
 app.config['SECRET'] = os.getenv('JWT_SECRET', 'fastx-secret-key')
+
+def _db_ssl():
+    ca = os.getenv('DB_SSL_CA', '')
+    if not ca:
+        return None
+    path = '/tmp/mysql-ca.pem' if ca.strip().startswith('-----BEGIN') else ca
+    if ca.strip().startswith('-----BEGIN'):
+        with open(path, 'w') as f:
+            f.write(ca)
+    return {'ca': path}
+
+_db_ssl_cfg = _db_ssl()
 DB = dict(
     host=os.getenv('DB_HOST', 'localhost'),
     port=int(os.getenv('DB_PORT', 3307)),
@@ -16,7 +29,8 @@ DB = dict(
     password=os.getenv('DB_PASS', 'root'),
     database=os.getenv('DB_NAME', 'fastx'),
     cursorclass=pymysql.cursors.DictCursor,
-    autocommit=True
+    autocommit=True,
+    **({'ssl': _db_ssl_cfg} if _db_ssl_cfg else {})
 )
 
 LOCATIONS = [
@@ -169,7 +183,15 @@ def booked_seats(route_id, travel_date):
 
 @app.route('/')
 def index():
-    return jsonify({'app': 'FastX API', 'ui': 'http://localhost:4200', 'docs': '/api/locations'})
+    return jsonify({'app': 'FastX API', 'status': 'ok', 'ui': _frontend})
+
+@app.route('/health')
+def health():
+    try:
+        q("SELECT 1", one=True)
+        return jsonify({'status': 'healthy'})
+    except Exception as e:
+        return jsonify({'status': 'error', 'detail': str(e)}), 503
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -472,4 +494,7 @@ def admin_del_route(rid):
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True, port=5000)
+    port = int(os.getenv('PORT', 5000))
+    app.run(debug=os.getenv('FLASK_DEBUG', '0') == '1', host='0.0.0.0', port=port)
+else:
+    init_db()

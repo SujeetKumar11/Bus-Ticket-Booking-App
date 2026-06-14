@@ -32,6 +32,10 @@ Default DB password is `root` — no extra env vars needed.
 
 Open **http://localhost:4200**
 
+## Deploy for free
+
+See **[DEPLOY.md](DEPLOY.md)** for step-by-step hosting on Netlify + Render + Aiven (all free tiers).
+
 ## Default Logins
 
 | Role | Email | Password |
