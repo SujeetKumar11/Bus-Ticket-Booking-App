@@ -4,15 +4,17 @@ import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 
+import { BrandLogoComponent } from '../../shared/brand-logo.component';
+
 @Component({
   standalone: true,
-  imports: [FormsModule, RouterLink, NgIf],
+  imports: [FormsModule, RouterLink, NgIf, BrandLogoComponent],
   template: `
   <div class="auth-wrap">
     <div class="auth-card">
-      <div class="logo">Fast<span>X</span></div>
+      <app-brand-logo [light]="true"></app-brand-logo>
       <h2>Welcome Back</h2>
-      <p class="auth-sub">Login to search and book bus tickets</p>
+      <p class="auth-sub">Sign in to book your next bus journey</p>
       <form (ngSubmit)="submit()">
         <label>Email or Username</label>
         <input [(ngModel)]="email" name="email" required>
@@ -25,7 +27,7 @@ import { ApiService } from '../../services/api.service';
       <p class="link">No account? <a routerLink="/register">Register</a></p>
     </div>
   </div>`,
-  styles: [`:host{display:block}.auth-sub{text-align:center;color:#888;font-size:.9rem;margin:-1rem 0 1rem}`]
+  styles: [`:host{display:block}.auth-card app-brand-logo{justify-content:center;margin-bottom:.5rem}`]
 })
 export class LoginComponent {
   email = '';

@@ -3,12 +3,14 @@ import { Router } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 
+import { BrandLogoComponent } from '../../shared/brand-logo.component';
+
 @Component({
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, BrandLogoComponent],
   template: `
   <header class="topbar">
-    <div class="logo">FastX Admin</div>
+    <app-brand-logo badge="Admin"></app-brand-logo>
     <nav>
       <button [class.active]="tab==='users'" (click)="tab='users';loadUsers()">Users</button>
       <button [class.active]="tab==='operators'" (click)="tab='operators';loadOperators()">Operators</button>

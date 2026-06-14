@@ -4,18 +4,32 @@ import { Router } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 
+import { BrandLogoComponent } from '../../shared/brand-logo.component';
+
 @Component({
   standalone: true,
-  imports: [FormsModule, NgFor, NgIf],
+  imports: [FormsModule, NgFor, NgIf, BrandLogoComponent],
   template: `
   <header class="topbar">
-    <div class="logo">Fast<span>X</span></div>
+    <app-brand-logo></app-brand-logo>
     <span class="greet">Hi, {{name}}</span>
     <nav>
-      <button [class.active]="tab==='search'" (click)="tab='search'">Find Bus</button>
-      <button [class.active]="tab==='bookings'" (click)="loadBookings()">My Bookings</button>
-      <button [class.active]="tab==='profile'" (click)="loadProfile()">Profile</button>
-      <button class="logout" (click)="logout()">Logout</button>
+      <button [class.active]="tab==='search'" (click)="tab='search'">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        Find Bus
+      </button>
+      <button [class.active]="tab==='bookings'" (click)="loadBookings()">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V9z"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        My Bookings
+      </button>
+      <button [class.active]="tab==='profile'" (click)="loadProfile()">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Profile
+      </button>
+      <button class="logout" (click)="logout()">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </button>
     </nav>
   </header>
 
@@ -23,8 +37,13 @@ import { ApiService } from '../../services/api.service';
   <main class="container" *ngIf="tab==='search'">
     <section class="hero">
       <div class="hero-text">
-        <h1>Book Your Bus Journey</h1>
-        <p>Search routes, pick seats, pay online — all in one place.</p>
+        <h1>Plan Your Next Journey</h1>
+        <p>Discover routes, choose your seat, and travel smarter with YatraGo.</p>
+        <div class="hero-tags">
+          <span class="hero-tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 17l-6.5 3.5 2-7L2 9h7z"/></svg> 48+ Routes</span>
+          <span class="hero-tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8 2 4 5 4 9c0 5.2 8 13 8 13s8-7.8 8-13c0-4-4-7-8-7z"/></svg> 18 Cities</span>
+          <span class="hero-tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/></svg> Secure Pay</span>
+        </div>
       </div>
       <form class="search-panel" (ngSubmit)="search()">
         <div class="search-row">
@@ -36,7 +55,9 @@ import { ApiService } from '../../services/api.service';
               <li *ngFor="let l of originList" (mousedown)="pickOrigin(l)">{{l}}</li>
             </ul>
           </div>
-          <button type="button" class="swap-btn" (click)="swap()" title="Swap">⇄</button>
+          <button type="button" class="swap-btn" (click)="swap()" title="Swap cities">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 16V4m0 0L3 8m4-4 4 4M17 8v12m0 0 4-4m-4 4-4-4"/></svg>
+          </button>
           <div class="field ac-wrap">
             <label>To</label>
             <input [(ngModel)]="destination" name="destination" placeholder="Destination city" required autocomplete="off"
@@ -50,6 +71,7 @@ import { ApiService } from '../../services/api.service';
             <input type="date" [(ngModel)]="date" name="date" [min]="today" required>
           </div>
           <button type="submit" class="search-btn" [disabled]="searching">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             {{searching ? 'Searching...' : 'Search Buses'}}
           </button>
         </div>
@@ -64,6 +86,7 @@ import { ApiService } from '../../services/api.service';
     </div>
 
     <div class="empty" *ngIf="searched && !searching && !routes.length && !error">
+      <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M8 14h.01M12 14h.01"/></svg>
       <p>No buses found for {{origin}} → {{destination}}</p>
       <span>Pick cities from the dropdown. Try these routes:</span>
       <div class="route-hints">
@@ -177,7 +200,10 @@ import { ApiService } from '../../services/api.service';
           <span><i class="booked"></i> Booked</span>
         </div>
         <div class="bus-layout">
-          <div class="driver">🚌 Driver</div>
+          <div class="driver">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 16c0 .55.45 1 1 1h1v1a1 1 0 0 0 2 0v-1h8v1a1 1 0 0 0 2 0v-1h1c.55 0 1-.45 1-1v-4l-1.5-4.5A2 2 0 0 0 15.5 7h-7A2 2 0 0 0 6.5 9.5L5 14v2z"/></svg>
+            Front · Driver
+          </div>
           <div class="seat-row" *ngFor="let row of seatRows">
             <button *ngFor="let s of row.left" class="seat"
               [class.taken]="booked.includes(s)" [class.picked]="picked.includes(s)"
@@ -224,9 +250,11 @@ import { ApiService } from '../../services/api.service';
       </div>
 
       <div *ngIf="step === 3" class="success-pane">
-        <div class="check">✓</div>
+        <div class="check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
         <h3>Booking Confirmed!</h3>
-        <p>Your ticket has been booked successfully.</p>
+        <p>Your YatraGo e-ticket is ready.</p>
         <button (click)="finishBooking()">View E-Ticket</button>
         <button class="secondary" (click)="closeAll()">Close</button>
       </div>
@@ -239,7 +267,7 @@ import { ApiService } from '../../services/api.service';
   <div class="modal" *ngIf="ticket" (click)="ticket=null">
     <div class="modal-body eticket" (click)="$event.stopPropagation()">
       <div class="eticket-head">
-        <div class="logo">Fast<span>X</span></div>
+        <app-brand-logo [light]="true" [compact]="true"></app-brand-logo>
         <span>E-Ticket</span>
       </div>
       <div class="eticket-id">Booking #{{ticket.id}}</div>

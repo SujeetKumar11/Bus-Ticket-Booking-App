@@ -4,14 +4,17 @@ import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 
+import { BrandLogoComponent } from '../../shared/brand-logo.component';
+
 @Component({
   standalone: true,
-  imports: [FormsModule, RouterLink, NgIf],
+  imports: [FormsModule, RouterLink, NgIf, BrandLogoComponent],
   template: `
   <div class="auth-wrap">
     <div class="auth-card">
-      <div class="logo">FastX</div>
-      <h2>Forgot Password</h2>
+      <app-brand-logo [light]="true"></app-brand-logo>
+      <h2>Reset Password</h2>
+      <p class="auth-sub">Enter your email and choose a new password</p>
       <form (ngSubmit)="submit()">
         <label>Email</label>
         <input type="email" [(ngModel)]="email" name="email" required>
@@ -25,7 +28,7 @@ import { ApiService } from '../../services/api.service';
       <p class="link"><a routerLink="/login">Back to Login</a></p>
     </div>
   </div>`,
-  styles: [`:host{display:block}`]
+  styles: [`:host{display:block}.auth-card app-brand-logo{justify-content:center;margin-bottom:.5rem}.auth-sub{text-align:center;color:#64748B;font-size:.9rem;margin:-.25rem 0 1rem}`]
 })
 export class ForgotComponent {
   email = '';

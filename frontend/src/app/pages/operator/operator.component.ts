@@ -4,12 +4,14 @@ import { Router } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 
+import { BrandLogoComponent } from '../../shared/brand-logo.component';
+
 @Component({
   standalone: true,
-  imports: [FormsModule, NgFor, NgIf],
+  imports: [FormsModule, NgFor, NgIf, BrandLogoComponent],
   template: `
   <header class="topbar">
-    <div class="logo">FastX Operator</div>
+    <app-brand-logo badge="Operator"></app-brand-logo>
     <nav>
       <button [class.active]="tab==='routes'" (click)="tab='routes'">Routes</button>
       <button [class.active]="tab==='seats'" (click)="tab='seats'">Seat Availability</button>
