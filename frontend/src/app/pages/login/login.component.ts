@@ -40,8 +40,8 @@ import { BrandLogoComponent } from '../../shared/brand-logo.component';
 
       <div class="staff-hint" *ngIf="mode === 'staff'">
         <p><strong>Demo accounts</strong></p>
-        <span>Admin: admin@fastx.com</span>
-        <span>Operator: operator@fastx.com</span>
+        <span>Admin: admin&#64;fastx.com</span>
+        <span>Operator: operator&#64;fastx.com</span>
       </div>
 
       <ng-container *ngIf="mode === 'user'">
