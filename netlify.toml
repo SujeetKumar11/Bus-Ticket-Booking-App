@@ -5,7 +5,7 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://REPLACE-WITH-YOUR-RENDER-URL.onrender.com/api/:splat"
+  to = "https://fastx-api.onrender.com/api/:splat"
   status = 200
   force = true
 
