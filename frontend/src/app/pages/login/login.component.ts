@@ -13,21 +13,12 @@ import { BrandLogoComponent } from '../../shared/brand-logo.component';
   <div class="auth-wrap">
     <div class="auth-card">
       <app-brand-logo [light]="true"></app-brand-logo>
+      <h2>Welcome Back</h2>
 
-      <div class="login-tabs">
-        <button type="button" [class.active]="mode === 'user'" (click)="setMode('user')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          Passenger
-        </button>
-        <button type="button" [class.active]="mode === 'staff'" (click)="setMode('staff')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 17l-6.5 3.5 2-7L2 9h7z"/></svg>
-          Admin / Operator
-        </button>
+      <div class="login-switch">
+        <button type="button" [class.on]="mode === 'user'" (click)="setMode('user')">Passenger</button>
+        <button type="button" [class.on]="mode === 'staff'" (click)="setMode('staff')">Staff</button>
       </div>
-
-      <h2>{{ mode === 'user' ? 'Passenger Login' : 'Staff Login' }}</h2>
-      <p class="auth-sub" *ngIf="mode === 'user'">Sign in to search routes and book tickets</p>
-      <p class="auth-sub" *ngIf="mode === 'staff'">Sign in to manage routes, bookings, or the platform</p>
 
       <form (ngSubmit)="submit()">
         <label>Email or Username</label>
@@ -35,23 +26,11 @@ import { BrandLogoComponent } from '../../shared/brand-logo.component';
         <label>Password</label>
         <input type="password" [(ngModel)]="password" name="password" required autocomplete="current-password">
         <p class="err" *ngIf="error">{{error}}</p>
-        <button type="submit">{{ mode === 'user' ? 'Login as Passenger' : 'Login as Staff' }}</button>
+        <button type="submit">Login</button>
       </form>
 
-      <div class="staff-hint" *ngIf="mode === 'staff'">
-        <p><strong>Demo accounts</strong></p>
-        <span>Admin: admin&#64;fastx.com</span>
-        <span>Operator: operator&#64;fastx.com</span>
-      </div>
-
-      <ng-container *ngIf="mode === 'user'">
-        <p class="link"><a routerLink="/forgot">Forgot Password?</a></p>
-        <p class="link">No account? <a routerLink="/register">Register as Passenger</a></p>
-      </ng-container>
-
-      <p class="link staff-link" *ngIf="mode === 'staff'">
-        Not staff? <a href="#" (click)="setMode('user'); $event.preventDefault()">Passenger login</a>
-      </p>
+      <p class="link" *ngIf="mode === 'user'"><a routerLink="/forgot">Forgot Password?</a></p>
+      <p class="link" *ngIf="mode === 'user'">No account? <a routerLink="/register">Register</a></p>
     </div>
   </div>`,
   styles: [`:host{display:block}.auth-card app-brand-logo{justify-content:center;margin-bottom:.75rem}`]

@@ -108,6 +108,9 @@ body {
 .auth-card {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   background: var(--card);
   backdrop-filter: blur(16px);
   padding: 2.25rem 2.5rem;
@@ -123,55 +126,35 @@ body {
   margin-bottom: .5rem;
 }
 
-.login-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: .5rem;
-  margin-bottom: 1.25rem;
-  padding: .35rem;
+.login-switch {
+  display: inline-flex;
+  margin: 0 auto 1.25rem;
+  padding: 3px;
   background: #F1F5F9;
-  border-radius: 12px;
+  border-radius: 8px;
+  gap: 2px;
 }
-.login-tabs button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .4rem;
-  padding: .65rem .5rem;
+.login-switch button {
+  padding: .35rem .85rem;
   border: none;
-  border-radius: 9px;
+  border-radius: 6px;
   background: transparent;
   color: var(--text-muted);
-  font-size: .82rem;
+  font-size: .78rem;
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
-  transition: all .2s;
+  transition: all .15s;
 }
-.login-tabs button svg { width: 16px; height: 16px; flex-shrink: 0; }
-.login-tabs button.active {
+.login-switch button.on {
   background: #fff;
   color: var(--indigo);
-  box-shadow: 0 2px 8px rgba(55,48,163,.12);
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
 }
-.login-tabs button:hover:not(.active) { color: var(--indigo-dark); }
-
-.staff-hint {
-  margin-top: 1.25rem;
-  padding: .85rem 1rem;
-  background: #EEF2FF;
-  border-radius: 10px;
-  border: 1px solid #C7D2FE;
-  font-size: .82rem;
-  color: var(--indigo-dark);
-}
-.staff-hint p { margin-bottom: .4rem; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--indigo); }
-.staff-hint span { display: block; color: var(--text-muted); line-height: 1.6; }
-.staff-link { margin-top: 1rem; }
+.auth-card .login-switch { display: flex; width: fit-content; align-self: center; }
 
 .auth-card h2 {
-  margin: .75rem 0 .35rem;
-  color: var(--indigo-dark);
+  margin: .5rem 0 1rem;
   text-align: center;
   font-family: 'Fraunces', serif;
   font-size: 1.5rem;
